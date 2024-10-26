@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="Real Sonar - Neurotrauma Feature Patch" modversion="1.0.0" corepackage="False">
+	<Item file="%ModDir%/Xml/items.xml" />
+</contentpackage>

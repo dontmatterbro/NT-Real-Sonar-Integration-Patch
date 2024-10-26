@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+	<Override>
+		  <!-- Brain hemorrhage -->
+		  <Affliction name="Brain hemorrhage" identifier="brainhemorrhage" type="brainhemorrhage" maxstrength="100" treatmentthreshold="40" limbspecific="true" indicatorlimb="Head" healcostmultiplier="0" basehealcost="650" showiconthreshold="33" showinhealthscannerthreshold="0" causeofdeathdescription="afflictioncauseofdeath.brainhemorrhage" selfcauseofdeathdescription="afflictioncauseofdeathself.brainhemorrhage">
+			<icon texture="%ModDir%/Icons/Afflictions.png" sourcerect="384,0,128,128" origin="0,0" />
+			<Description textidentifier="afflictiondescription.brainhemorrhage" target="OtherCharacter" minstrength="0" maxstrength="25" />
+			<Description textidentifier="afflictiondescription.brainhemorrhage.medium" target="OtherCharacter" minstrength="25" maxstrength="99" />
+			<Description textidentifier="afflictiondescription.brainhemorrhage.high" target="OtherCharacter" minstrength="99" maxstrength="100" />
+			<Description textidentifier="afflictiondescription.brainhemorrhage.self" target="Self" minstrength="0" maxstrength="25" />
+			<Description textidentifier="afflictiondescription.brainhemorrhage.medium.self" target="Self" minstrength="25" maxstrength="100" />
+			<Effect minstrength="0" maxstrength="15" multiplybymaxvitality="true" minvitalitydecrease="0.0" maxvitalitydecrease="0.15" minscreendistort="0.0" maxscreendistort="0.15" minscreenblur="0.0" maxscreenblur="0.15" minradialdistort="0.0" maxradialdistort="0.15" minspeedmultiplier="1" maxspeedmultiplier="0.8">
+			  <StatusEffect target="Character" disabledeltatime="true" interval="1">
+				<ReduceAffliction identifier="brainhemorrhage" strength="0.02" />
+			  </StatusEffect>
+			  <!-- Integration with Neurotrauma brain transplants & amputations. -->
+			  <StatusEffect target="Character" interval="1" disabledeltatime="true" comparison="or">
+				<Conditional brainremoved="gt 0" />
+				<Conditional th_amputation="gt 0" />
+				<Conditional sh_amputation="gt 0" />
+				<ReduceAffliction type="brainhemorrhage" strength="1000" />
+				<Affliction identifier="removehemorrhagefx" strength="1000" />
+			  </StatusEffect>
+			</Effect>
+			<Effect minstrength="15" maxstrength="99" multiplybymaxvitality="true" dialogflag="BrainHemorrhageLow" minvitalitydecrease="0.15" maxvitalitydecrease="1.0" minscreendistort="0.15" maxscreendistort="1.7" minscreenblur="0.15" maxscreenblur="2.0" mingrainstrength="0.15" maxgrainstrength="2.0" minradialdistort="0.15" maxradialdistort="1.7" minspeedmultiplier="0.8" maxspeedmultiplier="0.25">
+			  <!-- Integration with Neurotrauma brain transplants & amputations. -->
+			  <StatusEffect target="Character" interval="1" disabledeltatime="true" comparison="or">
+				<Conditional brainremoved="gt 0" />
+				<Conditional th_amputation="gt 0" />
+				<Conditional sh_amputation="gt 0" />
+				<ReduceAffliction type="brainhemorrhage" strength="1000" />
+				<Affliction identifier="removehemorrhagefx" strength="1000" />
+			  </StatusEffect>
+			  <!-- After 15%, the hemorrhaging advances by itself, leaving the patient with ~5 minutes to live. -->
+			  <StatusEffect target="Character" targetlimb="Head" disabledeltatime="true" interval="1">
+				<Conditional mannainfluencehead="lteq 0" />
+				<Affliction identifier="brainhemorrhage" strength="0.28" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimb="Head" disabledeltatime="true" interval="1">
+				<Conditional brainhemorrhage="gteq 25" />
+				<Affliction identifier="photopsia" strength="0.9" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimb="Head" disabledeltatime="true" interval="1">
+				<Conditional brainhemorrhage="gteq 30" />
+				<Affliction identifier="ataxia" strength="0.8" />
+			  </StatusEffect>
+			  <StatusEffect target="Character">
+				<Conditional brainhemorrhage="gteq 40" />
+				<Affliction identifier="brainbleedoverlay" strength="1" />
+			  </StatusEffect>
+			  <StatusEffect target="Character">
+				<Conditional brainhemorrhage="gteq 50" />
+				<Affliction identifier="psychosis" strength="1" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimb="Head">
+				<Conditional brainhemorrhage="gteq 60" />
+				<Affliction identifier="myodesopsias" strength="2" />
+				<Affliction identifier="aphasia" strength="0.8" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimb="LeftArm,RightArm">
+				<Conditional brainhemorrhage="gteq 70" />
+				<Affliction identifier="nervedamage" strength="0.1" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimb="Head">
+				<Conditional brainhemorrhage="gteq 80" />
+				<Affliction identifier="opticneuritis" strength="3.5" />
+			  </StatusEffect>
+			  <!-- Sound loops -->
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional isLocalPlayer="true" />
+				<Conditional brainhemorrhage="gteq 15" />
+				<Conditional brainhemorrhage="lt 32" />
+				<Sound file="%ModDir%/Sounds/brainHemorrhageStage1.ogg" volume="1.0" dontmuffle="true" loop="true" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional isLocalPlayer="true" />
+				<Conditional brainhemorrhage="gteq 32" />
+				<Conditional brainhemorrhage="lt 49" />
+				<Sound file="%ModDir%/Sounds/brainHemorrhageStage2.ogg" volume="1.2" dontmuffle="true" loop="true" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional isLocalPlayer="true" />
+				<Conditional brainhemorrhage="gteq 49" />
+				<Conditional brainhemorrhage="lt 66" />
+				<Sound file="%ModDir%/Sounds/brainHemorrhageStage3.ogg" volume="1.4" dontmuffle="true" loop="true" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional isLocalPlayer="true" />
+				<Conditional brainhemorrhage="gteq 66" />
+				<Conditional brainhemorrhage="lt 83" />
+				<Sound file="%ModDir%/Sounds/brainHemorrhageStage4.ogg" volume="1.6" dontmuffle="true" loop="true" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional isLocalPlayer="true" />
+				<Conditional brainhemorrhage="gteq 83" />
+				<Sound file="%ModDir%/Sounds/brainHemorrhageStage5.ogg" volume="1.8" dontmuffle="true" loop="true" />
+			  </StatusEffect>
+			</Effect>
+			<!-- Kills the patient at 100% -->
+			<Effect minstrength="99" maxstrength="100" multiplybymaxvitality="true" minvitalitydecrease="1.0" maxvitalitydecrease="2.0" minscreendistort="2" maxscreendistort="10" minscreenblur="2" maxscreenblur="10" minchromaticaberration="2" maxchromaticaberration="10" mingrainstrength="2" maxgrainstrength="10" minradialdistort="2" maxradialdistort="10">
+			  <StatusEffect target="Character" targetlimb="Head">
+				<Affliction identifier="brainhemorrhage" strength="0.35" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional brainhemorrhage="gteq 97" />
+				<Conditional IsLocalPlayer="True" />
+				<ReduceAffliction identifier="blindness" strength="1000" />
+				<Sound file="%ModDir%/Sounds/brainDeath.ogg" loop="false" dontmuffle="true" volume="1.4" />
+			  </StatusEffect>
+			</Effect>
+		  </Affliction>
+	
+		  <!-- Ruptured lung -->
+		  <Affliction name="Ruptured lung" identifier="rupturedlung" type="rupturedlung" maxstrength="100" treatmentthreshold="20" limbspecific="true" indicatorlimb="Torso" healcostmultiplier="3.5" showiconthreshold="5" showinhealthscannerthreshold="5" causeofdeathdescription="afflictioncauseofdeath.rupturedlung" selfcauseofdeathdescription="afflictioncauseofdeathself.rupturedlung">
+			<icon texture="%ModDir%/Icons/Afflictions.png" sourcerect="256,0,128,128" origin="0,0" />
+			<Description textidentifier="afflictiondescription.rupturedlung" target="OtherCharacter" minstrength="0" maxstrength="25" />
+			<Description textidentifier="afflictiondescription.rupturedlung.high" target="OtherCharacter" minstrength="25" maxstrength="100" />
+			<Description textidentifier="afflictiondescription.rupturedlung.self" target="Self" minstrength="0" maxstrength="25" />
+			<Description textidentifier="afflictiondescription.rupturedlung.high.self" target="Self" minstrength="25" maxstrength="100" />
+			<Effect minstrength="0" maxstrength="100" multiplybymaxvitality="true" minvitalitydecrease="0.0" maxvitalitydecrease="1.0">
+			  <StatusEffect target="Character" disabledeltatime="true" interval="1">
+				<ReduceAffliction identifier="rupturedlung" strength="0.03" />
+			  </StatusEffect>
+			  <!-- Integration with Neurotrauma organ transplants. -->
+			  <StatusEffect target="Character" interval="1" disabledeltatime="true">
+				<Conditional lungremoved="gt 0" />
+				<ReduceAffliction identifier="rupturedlung" strength="1000" />
+			  </StatusEffect>
+			</Effect>
+			<!-- Coughing up blood -->
+			<PeriodicEffect mininterval="15" maxinterval="27">
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional hasspecifiertag="male" />
+				<Conditional IsUnconscious="false" />
+				<Conditional rupturedlung="gteq 25" />
+				<Sound file="%ModDir%/Sounds/male_cough1.ogg" selectionmode="Random" />
+				<Sound file="%ModDir%/Sounds/male_cough2.ogg" />
+				<Sound file="%ModDir%/Sounds/male_cough3.ogg" />
+				<Sound file="%ModDir%/Sounds/male_cough4.ogg" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional hasspecifiertag="female" />
+				<Conditional IsUnconscious="false" />
+				<Conditional rupturedlung="gteq 25" />
+				<Sound file="%ModDir%/Sounds/female_cough1.ogg" selectionmode="Random" />
+				<Sound file="%ModDir%/Sounds/female_cough2.ogg" />
+				<Sound file="%ModDir%/Sounds/female_cough3.ogg" />
+				<Sound file="%ModDir%/Sounds/female_cough4.ogg" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional rupturedlung="gteq 25" />
+				<Conditional IsUnconscious="false" />
+				<Affliction identifier="stun" strength="0.25" />
+				<Affliction identifier="bloodloss" strength="6" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" targetlimbs="Head" duration="1" comparison="and">
+				<Conditional rupturedlung="gteq 25" />
+				<Conditional IsUnconscious="false" />
+				<Conditional HideFace="false" />
+				<Sound file="Content/Sounds/Damage/Gore1.ogg" selectionmode="Random" />
+				<Sound file="Content/Sounds/Damage/Gore5.ogg" />
+				<Sound file="Content/Sounds/Damage/Gore8.ogg" />
+				<ParticleEmitter particle="bloodsplash" copyentityangle="true" anglemin="-10" anglemax="10" particlespersecond="50" velocitymin="50" velocitymax="200" scalemin="0.1" scalemax="0.2" />
+				<Explosion range="0.0" structuredamage="0" itemdamage="0" force="0.0" severlimbsprobability="0.0" decal="blood" decalsize="1.25" shockwave="false" underwaterbubble="false" />
+			  </StatusEffect>
+			</PeriodicEffect>
+			<!-- Wheezing and reduced oxygen -->
+			<PeriodicEffect mininterval="6" maxinterval="7">
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional hasspecifiertag="male" />
+				<Conditional rupturedlung="gteq 10" />
+				<Conditional IsUnconscious="false" />
+				<Sound file="%ModDir%/Sounds/male_wheeze1.ogg" volume="0.7" range="300" selectionmode="Random" />
+				<Sound file="%ModDir%/Sounds/male_wheeze2.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/male_wheeze3.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/male_wheeze4.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/male_wheeze5.ogg" volume="0.7" range="300" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional hasspecifiertag="female" />
+				<Conditional rupturedlung="gteq 10" />
+				<Conditional IsUnconscious="false" />
+				<Sound file="%ModDir%/Sounds/female_wheeze1.ogg" volume="0.7" range="300" selectionmode="Random" />
+				<Sound file="%ModDir%/Sounds/female_wheeze2.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/female_wheeze3.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/female_wheeze4.ogg" volume="0.7" range="300" />
+				<Sound file="%ModDir%/Sounds/female_wheeze5.ogg" volume="0.7" range="300" />
+			  </StatusEffect>
+			  <StatusEffect target="Character" comparison="and">
+				<Conditional rupturedlung="gteq 10" />
+				<Conditional IsUnconscious="false" />
+				<Affliction identifier="oxygenlow" strength="17" />
+			  </StatusEffect>
+			</PeriodicEffect>
+		  </Affliction>
+		  
+	</Override>
+</Afflictions>
