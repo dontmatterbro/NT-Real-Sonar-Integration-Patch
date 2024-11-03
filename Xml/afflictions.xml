@@ -30,11 +30,17 @@
 				<Conditional sh_amputation="gt 0" />
 				<ReduceAffliction type="brainhemorrhage" strength="1000" />
 				<Affliction identifier="removehemorrhagefx" strength="1000" />
+			  </StatusEffect>			  
+			  <!-- Brain Hemmorrage gives Neurotrauma-->
+			  <StatusEffect target="Character" interval="1" disabledeltatime="true" comparison="or">
+				<Affliction identifier="cerebralhypoxemia" strength="1" />
 			  </StatusEffect>
 			  <!-- After 15%, the hemorrhaging advances by itself, leaving the patient with ~5 minutes to live. -->
 			  <StatusEffect target="Character" targetlimb="Head" disabledeltatime="true" interval="1">
 				<Conditional mannainfluencehead="lteq 0" />
 				<Affliction identifier="brainhemorrhage" strength="0.28" />
+				
+				<Affliction identifier="cerebralhypoxia" strength="0.15" />
 			  </StatusEffect>
 			  <StatusEffect target="Character" targetlimb="Head" disabledeltatime="true" interval="1">
 				<Conditional brainhemorrhage="gteq 25" />
@@ -100,6 +106,7 @@
 			<Effect minstrength="99" maxstrength="100" multiplybymaxvitality="true" minvitalitydecrease="1.0" maxvitalitydecrease="2.0" minscreendistort="2" maxscreendistort="10" minscreenblur="2" maxscreenblur="10" minchromaticaberration="2" maxchromaticaberration="10" mingrainstrength="2" maxgrainstrength="10" minradialdistort="2" maxradialdistort="10">
 			  <StatusEffect target="Character" targetlimb="Head">
 				<Affliction identifier="brainhemorrhage" strength="0.35" />
+				<Affliction identifier="cerebralhypoxia" strength="2" />
 			  </StatusEffect>
 			  <StatusEffect target="Character" comparison="and">
 				<Conditional brainhemorrhage="gteq 97" />

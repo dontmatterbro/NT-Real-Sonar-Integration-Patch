@@ -25,8 +25,6 @@
 		<InventoryIcon texture="%ModDir:2936760984%/Icons/medicineIcons.png" sourcerect="64,0,64,64" origin="0.5,0.5" />
 		<Sprite texture="%ModDir:2936760984%/Icons/medicines.png" sourcerect="37,0,37,69" depth="0.6" origin="0.5,0.5" />
 		<Body width="25" height="40" density="15" />
-		<SuitableTreatment identifier="rupturedlung" suitability="100" />
-		<SuitableTreatment identifier="acoustictrauma" suitability="50" />
 		<MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="10" reload="1.0" msg="ItemMsgPickUpSelect">
 		  <RequiredSkill identifier="medical" level="35" />
 		  <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true">
@@ -252,11 +250,6 @@
 		  <Item identifier="stabilozine" />
 		  <Item identifier="pomegrenadeextract" />
 		</Deconstruct>
-		<SuitableTreatment identifier="vibrationdamage" suitability="100" />
-		<SuitableTreatment identifier="muscledamage" suitability="50" />
-		<SuitableTreatment identifier="mannainfluence" suitability="-1000" />
-		<SuitableTreatment identifier="mannausage" suitability="-1000" />
-		<SuitableTreatment identifier="mannaoverdose" suitability="-1000" />
 		<InventoryIcon texture="%ModDir:2936760984%/Icons/medicineIcons.png" sourcerect="128,0,64,64" origin="0.5,0.5" />
 		<Sprite texture="%ModDir:2936760984%/Icons/medicines.png" sourcerect="74,0,74,69" depth="0.6" origin="0.5,0.5" />
 		<Body width="80" height="42" density="11" />
